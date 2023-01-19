@@ -1,3 +1,21 @@
-#cont{
-background-color: yellow;
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+    margin: 10px;
+}
+.logo {
+    width: 100px;
+}
+.navItems >ul >li {
+padding: 10px;
+}
+.navItems >ul{
+    list-style-type: none;
+    display: flex;
+}
+.restaurant-List{
+    display: flex;
+    flex-wrap: wrap;
 }
