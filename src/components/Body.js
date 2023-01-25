@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 
@@ -25,7 +26,7 @@ const Body = () => {
         const json = await data.json()
         console.log(json) 
         setAllRestaurants(json?.data?.cards[0]?.data?.data?.cards)
-        setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards)
+        setFilteredRestaurants(json?.data?.cards[0]?.data?.data?.cards)
         
     }
     return filteredRestaurants.length===0 ? (<Shimmer/>):
@@ -49,7 +50,7 @@ const Body = () => {
         <div className="restaurant-List">
             {
                 filteredRestaurants?.map((restaurant) => {
-                    return <RestaurantCard {...restaurant.data} key={restaurant.data.id} />
+                    return <Link to={"/restaurant/" + restaurant.data.id}><RestaurantCard {...restaurant.data} key={restaurant.data.id} /></Link>
                 })
             }
             
