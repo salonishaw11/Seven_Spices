@@ -15,22 +15,11 @@ import ProfileClass from "./ProfileClass"
 
 class About extends React.Component{
   constructor(props) {
-    super(props);
+    super(props)
     console.log("parent - Constructor")
-    this.state = {
-      count: 0,
-      name: "",
-      location: "",
-      img:""
   }
-  }
-  async componentDidMount() {
+  componentDidMount() {
     console.log("parent - ComponentDidMount")
-    const data = await fetch("https://api.github.com/users/salonishaw11")
-        const json = await data.json()
-        this.setState({
-            name: json.name,
-        })
 
   }
   render() {
