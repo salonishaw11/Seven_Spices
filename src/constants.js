@@ -1,5 +1,6 @@
 import React from "react"
 import { ReactDOM } from "react"
+export const FETCH_MENU_URL = "https://www.swiggy.com/dapi/menu/v4/full?lat=23.6143217&lng=87.118782&menuId="
 export const restaurantList = [
     {
     "type": "restaurant",
