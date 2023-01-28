@@ -21,8 +21,8 @@ const Body = () => {
         );
         const json = await data.json()
         console.log(json) 
-        setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards)
-        setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards)
+        setAllRestaurants(json?.data?.cards[0]?.data?.data?.cards)
+        setFilteredRestaurants(json?.data?.cards[0]?.data?.data?.cards)
         
     }
     const isOnline = useOnline();
@@ -33,23 +33,23 @@ const Body = () => {
 
     return filteredRestaurants.length===0 ? (<Shimmer/>):
         (<>
-        <div className="search-container">
+        <div className="p-5 m-2 bg-yellow-100">
                 <input
                     type="text"
                     placeholder="search"
-                    className="search-input"
+                    className="p-2 m-2 focus:bg-pink-100"
                     value={searchText}
                     onChange={(e) => {
                         setSearchText(e.target.value);
                     }}
                 /> 
-                <button className="search-btn" onClick={() => {
+                <button className="p-2 m-2 bg-green-400 hover:bg-gray-400 rounded-md" onClick={() => {
                     
                     const data = filterdata(allRestaurants, searchText)
                     return setFilteredRestaurants(data)
                 }}>Search</button>
         </div>
-        <div className="restaurant-List">
+        <div className="flex flex-wrap">
             {
                 filteredRestaurants?.map((restaurant) => {
                     return <Link to={"/restaurant/" + restaurant.data.id}><RestaurantCard {...restaurant.data} key={restaurant.data.id} /></Link>
