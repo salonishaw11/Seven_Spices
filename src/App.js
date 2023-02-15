@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React, { Children, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -10,16 +10,25 @@ import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Profile from "./components/Profile";
 import ProfileClass from "./components/ProfileClass";
+import InstaMart from "./components/Instamart";
+import UserContext from "./utils/UserContext";
 
 
 
 
 const AppLayout = () => {
-    return(<React.Fragment>
+    const [user, setUser] = useState({
+        name: "Saloni Shaw",
+        email: "salonishaw1197@gmail.com"
+    })
+    return (<UserContext.Provider value={{
+        user: user,
+        setUser:setUser
+    }}>
         <Header />
         <Outlet />
         <Footer />
-        </React.Fragment>
+        </UserContext.Provider>
     )
 }
 
@@ -31,7 +40,9 @@ const appRouter = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <Body />
+                element: <Body
+                    user = {{ name: "saloni", age: 25 }}
+                     />
             },
             {
                 path: "/about",
@@ -50,7 +61,11 @@ const appRouter = createBrowserRouter([
             {
                 path: "/restaurant/:id",
                 element: <RestaurantMenu/>
-            }
+            },
+            {
+                path: "/instamart",
+                element: <InstaMart/>
+            },
         ]
     } ,
      

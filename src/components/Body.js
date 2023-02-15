@@ -4,12 +4,16 @@ import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { filterdata } from "../utils/helper";
 import useOnline from "../utils/useOnline";
+import UserContext from "../utils/UserContext";
+import { useContext } from "react";
 
 
-const Body = () => {
+const Body = (props) => {
     const [searchText, setSearchText] = useState("")
     const [filteredRestaurants, setFilteredRestaurants] = useState([])
     const [allRestaurants, setAllRestaurants] = useState([])
+   
+    const {user, setUser}= useContext(UserContext)
     
     useEffect(() => {
          getRestaurants();
@@ -21,8 +25,8 @@ const Body = () => {
         );
         const json = await data.json()
         console.log(json) 
-        setAllRestaurants(json?.data?.cards[0]?.data?.data?.cards)
-        setFilteredRestaurants(json?.data?.cards[0]?.data?.data?.cards)
+        setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards)
+        setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards)
         
     }
     const isOnline = useOnline();
@@ -47,12 +51,24 @@ const Body = () => {
                     
                     const data = filterdata(allRestaurants, searchText)
                     return setFilteredRestaurants(data)
-                }}>Search</button>
+                }}>
+                    Search
+                </button>
+                <input value={user.name} onChange={(e) => {
+                    setUser({
+                        name: e.target.value,
+                        email: "newemail.gmail.com"
+                    })
+                }}></input>
+
         </div>
         <div className="flex flex-wrap">
             {
                 filteredRestaurants?.map((restaurant) => {
-                    return <Link to={"/restaurant/" + restaurant.data.id}><RestaurantCard {...restaurant.data} key={restaurant.data.id} /></Link>
+                    return <Link to=
+                        {"/restaurant/" + restaurant.data.id}>
+                        <RestaurantCard {...restaurant.data} key={restaurant.data.id} user={props.user} />
+                    </Link>
                 })
             }
             
