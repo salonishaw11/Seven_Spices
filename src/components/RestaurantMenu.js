@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IMG_CON_URL } from "../constants";
+import { addItem } from "../utils/cartSlice";
 import useRestaurant from "../utils/useRestaurant";
 import Shimmer from "./Shimmer";
+import { useDispatch } from "react-redux";
 
 const RestaurantMenu = () => {
     // const [resDetail, setResDetail] = useState(null);
     const { id } = useParams();
-    const resDetail =useRestaurant(id)
+  const resDetail = useRestaurant(id)
+  const dispatch= useDispatch()
+  
+  const handleFoodItem = (item) => {
+    dispatch(addItem(item));
+    }
+    
 
     // useEffect(
     //     () => {
@@ -24,21 +32,29 @@ const RestaurantMenu = () => {
     // }
     
     return !resDetail? (<Shimmer/>) :(
-        <div>
-            <h1>
-                Restaurant id:{id}
-            </h1>
+        <div className="flex"> 
+         <div>
+            <h1>Restaurant id:{id}</h1>
             <h2>{resDetail.name}</h2>
             <img src={IMG_CON_URL + resDetail.cloudinaryImageId} />
             <h3>{resDetail.area}</h3>
             <h3>{resDetail.city}</h3>
-            <div>
+          </div>
+                <div className="p-5">
                 <h1>Menu</h1>
                 <ul>
-                    {Object.values(resDetail?.menu?.items).map((item) => <li key={item.id}>{item.name}</li>)}
+            {Object.values(resDetail?.menu?.items).map((item) =>
+              <li key={item.id}>
+              {item.name} -
+              <button className="p-1 m-5 bg-pink-400"
+                        onClick={() => handleFoodItem(item)}>
+                        Add Item
+              </button>
+            </li>)}
                     </ul>
+              </div>
             </div>
-         </div>
+            
      )
 }
 export default RestaurantMenu;

@@ -2,6 +2,7 @@ import React, { useState,useContext } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../utils/UserContext";
 import useOnline from "../utils/useOnline";
+import { useSelector } from "react-redux";
 
 
 const Title = () => {
@@ -18,7 +19,10 @@ const Header = () => {
     
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const isOnline=useOnline()
-    const {user}= useContext(UserContext)
+    const { user } = useContext(UserContext)
+    
+    const cartItems = useSelector(store => store.cart.items)
+    console.log(cartItems)
     return (
         <div className="flex justify-between bg-black text-white shadow-lg">
             <Title />
@@ -44,7 +48,9 @@ const Header = () => {
                             Instamart
                         </Link>
                     </li>
-                    <li className="px-2">Cart</li>
+                    <Link to="/cart">
+                        <li className="px-2">Cart- {cartItems.length} </li>
+                        </Link>
                 </ul>
 
             </div >

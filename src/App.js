@@ -12,6 +12,9 @@ import Profile from "./components/Profile";
 import ProfileClass from "./components/ProfileClass";
 import InstaMart from "./components/Instamart";
 import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import store from "./utils/store";
+import Cart from "./components/Cart";
 
 
 
@@ -21,14 +24,17 @@ const AppLayout = () => {
         name: "Saloni Shaw",
         email: "salonishaw1197@gmail.com"
     })
-    return (<UserContext.Provider value={{
+    return (
+        <Provider store={store}>
+        <UserContext.Provider value={{
         user: user,
         setUser:setUser
     }}>
         <Header />
         <Outlet />
         <Footer />
-        </UserContext.Provider>
+            </UserContext.Provider>
+            </Provider>
     )
 }
 
@@ -65,6 +71,10 @@ const appRouter = createBrowserRouter([
             {
                 path: "/instamart",
                 element: <InstaMart/>
+            },
+            {
+                path: "/cart",
+                element: <Cart/>
             },
         ]
     } ,
